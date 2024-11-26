@@ -75,7 +75,6 @@ stages:
 
   - job: RunDevContainer
     displayName: "Run Dev Container"
-    dependsOn: PushDockerImage
     steps:
     - task: SSH@0
       displayName: "Run Dev Container"
@@ -88,7 +87,6 @@ stages:
   
   - job: RunTestContainer
     displayName: "Run Test Container"
-    dependsOn: PushDockerImage
     steps:
     - task: SSH@0
       displayName: "Run Test Container"
