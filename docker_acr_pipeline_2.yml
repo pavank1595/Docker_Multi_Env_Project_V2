@@ -49,7 +49,7 @@ stages:
     - task: CopyFilesOverSSH@0
       inputs:
         sshEndpoint: 'dev-docker-connection'
-        sourceFolder: '/home/devopsdockeruser/donet_code'
+        sourceFolder: '/home/devopsdockeruser/dotnet_code'
         contents: 'dev-docker-compose.yml'
         targetFolder: '/home/devdockeruser/docker_compose_files'
         readyTimeout: '20000'
@@ -57,7 +57,7 @@ stages:
     - task: CopyFilesOverSSH@0
       inputs:
         sshEndpoint: 'test-docker-connection'
-        sourceFolder: '/home/devopsdockeruser/donet_code'
+        sourceFolder: '/home/devopsdockeruser/dotnet_code'
         contents: 'test-docker-compose.yml'
         targetFolder: '/home/testdockeruser/docker_compose_files'
         readyTimeout: '20000'
