@@ -46,21 +46,32 @@ stages:
         action: 'Run a Docker Compose command'
         dockerComposeCommand: 'push'
 
-    - task: CopyFilesOverSSH@0
-      inputs:
-        sshEndpoint: 'dev-docker-connection'
-        sourceFolder: '/home/devopsdockeruser/dotnet_code'
-        contents: 'dev-docker-compose.yml'
-        targetFolder: '/home/devdockeruser/docker_compose_files'
-        readyTimeout: '20000'
+- stage: Send_Docker_Compose_Files
+  jobs:
 
-    - task: CopyFilesOverSSH@0
-      inputs:
-        sshEndpoint: 'test-docker-connection'
-        sourceFolder: '/home/devopsdockeruser/dotnet_code'
-        contents: 'test-docker-compose.yml'
-        targetFolder: '/home/testdockeruser/docker_compose_files'
-        readyTimeout: '20000'
+  - job: SendFiles
+    displayName: "Send Files to Destination Docker Hosts"
+    steps:
+      - task: CopyFilesOverSSH@0
+        displayName: "Send compose file to Dev"
+        inputs:
+          sshEndpoint: 'dev-docker-connection'
+          sourceFolder: '/home/devopsdockeruser/dotnet_code'
+          contents: 'dev-docker-compose.yml'
+          targetFolder: '/home/devdockeruser/docker_compose_files'
+          readyTimeout: '20000'
+
+      - task: CopyFilesOverSSH@0
+        displayName: "Send compose file to Test"
+        inputs:
+          sshEndpoint: 'test-docker-connection'
+          sourceFolder: '/home/devopsdockeruser/dotnet_code'
+          contents: 'test-docker-compose.yml'
+          targetFolder: '/home/testdockeruser/docker_compose_files'
+          readyTimeout: '20000'
+
+- stage: Run_Containers
+  jobs:
 
   - job: RunDevContainer
     displayName: "Run Dev Container"
